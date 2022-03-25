@@ -5,15 +5,14 @@ package geekbrains.client;
 import geekbrains.server.CommonConstants;
 import geekbrains.server.ServerCommandConstants;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class Network {
     private Socket socket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
+    private HistoryMessage historyMessage;
 
     private final ChatController controller;
 
@@ -46,6 +45,10 @@ public class Network {
                             }
                         } else {
                             controller.displayMessage(messageFromServer);
+                            // записываем историю в файл с переносом строки
+                            historyMessage.write(messageFromServer + "\n" );
+
+
                         }
                     }
                 } catch (IOException exception) {
@@ -54,12 +57,14 @@ public class Network {
                 } finally {
                     // закроем соеденение
                     closeConnection();
+                    historyMessage.close();
 
                 }
 
             }
 
         }).start();
+        historyMessage = new HistoryMessage();
 
 }
     private void initializeNetwork() throws IOException {
@@ -86,7 +91,15 @@ public class Network {
 
             boolean authenticated = inputStream.readBoolean();
             if (authenticated) {
+
                 startReadServerMessages();
+                // создаем фаил для записи истории для каждого клиента
+                historyMessage.init(login);
+                // выводим историю сообщений для клиента. Для этогопроходим циклом по листу
+                // и выводим на дисплей 5 последних строк
+                for (int i = 0; i < historyMessage.read().size(); i++) {
+                    controller.displayMessage(historyMessage.read().get(i));
+                }
             }
             return authenticated;
         } catch (IOException e) {
@@ -96,18 +109,6 @@ public class Network {
         return false;
     }
 
-//    public void closeConnection() {
-//        try {
-//            outputStream.writeUTF(ServerCommandConstants.EXIT);
-//            outputStream.close();
-//            inputStream.close();
-//            socket.close();
-//        } catch (IOException exception) {
-//            exception.printStackTrace();
-//        }
-//
-//        System.exit(1);
-//    }
 
     public void closeConnection() {
         controller.setAuthenticated(false);
@@ -137,5 +138,5 @@ public class Network {
         }
     }
 
-
+    
 }

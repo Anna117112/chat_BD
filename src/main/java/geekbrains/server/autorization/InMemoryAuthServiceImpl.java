@@ -13,7 +13,6 @@ public class InMemoryAuthServiceImpl implements AuthService {
         users.put("login2", new UserData("login2", "password2", "second_user"));
         users.put("login3", new UserData("login3", "password3", "third_user"));
     }
-
     @Override
     public void start() {
         System.out.println("Сервис аутентификации инициализирован");

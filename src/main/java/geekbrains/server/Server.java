@@ -6,7 +6,7 @@ import geekbrains.server.autorization.AuthService;
 import geekbrains.server.autorization.BdAuhtProvider;
 import geekbrains.server.autorization.InMemoryAuthServiceImpl;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -14,7 +14,8 @@ import java.util.List;
 
 public class Server {
     private AuthService authService;
-    public AuthService getAuthService(){
+
+    public AuthService getAuthService() {
         return authService;
     }
 
@@ -24,7 +25,7 @@ public class Server {
         this.connectedUsers = new ArrayList<>();
         this.authService = new BdAuhtProvider();
         this.authService.start();
-        try  ( ServerSocket server = new ServerSocket(CommonConstants.SERVER_PORT);){
+        try (ServerSocket server = new ServerSocket(CommonConstants.SERVER_PORT);) {
 
             while (true) {
                 System.out.println("Сервер ожидает подключения");
@@ -37,16 +38,14 @@ public class Server {
             exception.printStackTrace();
         } finally {
 
-                authService.end();
-
-
+            authService.end();
 
 
         }
     }
 
 
-// проверяем занят ли ник
+    // проверяем занят ли ник
     public boolean isNickNameBusy(String nickName) {
         for (ClientHandler handler : connectedUsers) {
             if (handler.getNickName().equals(nickName)) {
@@ -56,27 +55,33 @@ public class Server {
 
         return false;
     }
-// рассылка сообщений по всем клиентам
+
+    // рассылка сообщений по всем клиентам
     public synchronized void broadcastMessage(String message) {
         for (ClientHandler handler : connectedUsers) {
             handler.sendMessage(message);
         }
+
     }
-// добавление клиента в список подключенных
+
+    // добавление клиента в список подключенных
     public synchronized void addConnectedUser(ClientHandler handler) {
         connectedUsers.add(handler);
-        broadcastMessage("Вошел в чат  " + handler.getNickName() );
+        broadcastMessage("Вошел в чат  " + handler.getNickName());
         // рассылаем список подключившихся клиетов
         broadcastClientList();
 
+
     }
-// отключение клиента
+
+    // отключение клиента
     public synchronized void disconnectUser(ClientHandler handler) {
         connectedUsers.remove(handler);
-        broadcastMessage("Вышел в чат  " + handler.getNickName() );
+        broadcastMessage("Вышел из чата  " + handler.getNickName());
         broadcastClientList();
     }
-// список клиентов которые покдлючились
+
+    // список клиентов которые покдлючились
     public synchronized void broadcastClientList() {
         StringBuilder stringBuilder = new StringBuilder();
         //отправляем всем эту строчку
@@ -90,10 +95,10 @@ public class Server {
     }
 
     // отправляем личные сообщения
-    public synchronized void sendPersonalMessage(ClientHandler sender, String receiverUsername, String message ){
+    public synchronized void sendPersonalMessage(ClientHandler sender, String receiverUsername, String message) {
         for (ClientHandler c : connectedUsers) {
             // перебираем всех если попадается клиент которому мы хотим написать
-            if (c.getNickName().equals(receiverUsername)){
+            if (c.getNickName().equals(receiverUsername)) {
                 // отправляем личное сообщение
                 c.sendMessage("от " + sender.getNickName() + ": " + message);
                 // у того кто отправил личное сообщение высветится
@@ -104,4 +109,8 @@ public class Server {
         // если в списке не нашли пользователя
         sender.sendMessage("пользователь " + receiverUsername + "не в сети ");
     }
+
+
+
+
 }

@@ -24,7 +24,6 @@ BdConnection {
             throw new RuntimeException("Невозможно подключится к БД");
         }
     }
-
     public static Statement getStmt() {
         return stmt;
     }

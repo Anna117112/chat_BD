@@ -13,7 +13,6 @@ public class BdAuhtProvider implements AuthService {
 
     }
 
-
     @Override
     // при старте открываем соеденение с базой данный
     public void start() {

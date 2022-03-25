@@ -58,6 +58,7 @@ public class ChatController implements Initializable {
 
         }
     }
+
 // отображение списка клиентов
     public void displayClient(String nickName) {
         Platform.runLater(new Runnable() {

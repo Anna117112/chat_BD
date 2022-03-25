@@ -1,8 +1,6 @@
 package geekbrains.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 
@@ -74,6 +72,7 @@ public class ClientHandler {
             // System.out.println("от " + nickName + ": " + messageInChat);
             if (message.equals(ServerCommandConstants.EXIT)) {
                 sendMessage("/exit");
+
                 return false;
             }
             // отправка персонального сообщения
@@ -131,6 +130,7 @@ public class ClientHandler {
     public void sendMessage(String message) {
         try {
             outputStream.writeUTF(message);
+
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -164,5 +164,7 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+
+
 }
 
