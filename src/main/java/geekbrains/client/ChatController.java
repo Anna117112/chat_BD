@@ -50,6 +50,7 @@ public class ChatController implements Initializable {
         setAuthenticated(false);
     }
 // отображение переписки
+
     public void displayMessage(String text) {
         if (textArea.getText().isEmpty()) {
             textArea.setText(text);

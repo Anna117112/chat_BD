@@ -3,12 +3,14 @@ package geekbrains.server;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutorService;
 
 public class ClientHandler {
     private final Server server;
     private final Socket socket;
     private final DataInputStream inputStream;
     private final DataOutputStream outputStream;
+    private  ExecutorService executorService;
 
     private String nickName;
 
@@ -16,14 +18,16 @@ public class ClientHandler {
         return nickName;
     }
 
-    public ClientHandler(Server server, Socket socket) {
+    public ClientHandler(ExecutorService executorService, Server server, Socket socket) {
         try {
             this.server = server;
             this.socket = socket;
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
-// открываем поток а в нем метод который собержит логику авторизации и чтеня сообщений
-            new Thread(() -> lodic()).start();
+// открываем поток через пул потоков прописано на сервере(сокращенная запись)
+            executorService.execute(this::lodic);
+            // открываем поток а в нем метод который содержит логику авторизации и чтеня сообщений
+            //new Thread(() -> lodic()).start();
 
         } catch (IOException exception) {
             throw new RuntimeException("Проблемы при создании обработчика");

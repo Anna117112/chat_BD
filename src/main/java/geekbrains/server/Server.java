@@ -11,9 +11,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private AuthService authService;
+    //потоки
+    private ExecutorService executorService;
 
     public AuthService getAuthService() {
         return authService;
@@ -22,6 +26,8 @@ public class Server {
     private List<ClientHandler> connectedUsers;
 
     public Server() {
+        // создаем пул потоков (столько потоков сколько ядер)
+        executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.connectedUsers = new ArrayList<>();
         this.authService = new BdAuhtProvider();
         this.authService.start();
@@ -31,7 +37,8 @@ public class Server {
                 System.out.println("Сервер ожидает подключения");
                 Socket socket = server.accept();
                 System.out.println("Клиент подключился");
-                new ClientHandler(this, socket);
+                // передаем в клиентхендолер потоки. Теперь при создании нового соединения открывается новый поток
+                new ClientHandler(executorService,this, socket);
             }
         } catch (IOException exception) {
             System.out.println("Ошибка в работе сервера");

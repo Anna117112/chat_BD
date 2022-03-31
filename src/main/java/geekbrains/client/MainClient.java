@@ -28,7 +28,6 @@ import java.io.IOException;
 //    }
 //}
 public class MainClient extends Application {
-
     @Override
     public void start(Stage ptimaryStage) throws IOException {
         // отдельно загрухаем fxml

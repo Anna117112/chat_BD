@@ -10,7 +10,6 @@ public class BdAuhtProvider implements AuthService {
     // закрываем соеденение
     public void end() {
         bdConnection.close();
-
     }
 
     @Override

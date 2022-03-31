@@ -10,6 +10,7 @@ BdConnection {
     // для отправки запросов
     private static Statement stmt;
 
+
     public BdConnection() {
         // логика открытия соеденения с бд
         try {
