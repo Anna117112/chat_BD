@@ -111,6 +111,7 @@ public class Network {
     }
 
 
+
     public void closeConnection() {
         controller.setAuthenticated(false);
         try {

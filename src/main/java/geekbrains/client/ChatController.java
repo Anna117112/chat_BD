@@ -45,6 +45,7 @@ public class ChatController implements Initializable {
         clientList.setManaged(authenticated);
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setAuthenticated(false);

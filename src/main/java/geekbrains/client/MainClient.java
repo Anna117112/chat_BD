@@ -43,6 +43,7 @@ public class MainClient extends Application {
         ptimaryStage.show();
     }
 
+
     public static void main (String[]args){
         launch();
     }

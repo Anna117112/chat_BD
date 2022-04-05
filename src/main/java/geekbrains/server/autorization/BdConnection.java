@@ -11,6 +11,7 @@ BdConnection {
     private static Statement stmt;
 
 
+
     public BdConnection() {
         // логика открытия соеденения с бд
         try {

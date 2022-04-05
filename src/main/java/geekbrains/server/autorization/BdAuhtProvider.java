@@ -12,6 +12,7 @@ public class BdAuhtProvider implements AuthService {
         bdConnection.close();
     }
 
+
     @Override
     // при старте открываем соеденение с базой данный
     public void start() {
