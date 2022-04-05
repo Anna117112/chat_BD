@@ -11,7 +11,6 @@ public class UserData {
         this.nickName = nickName;
     }
 
-
     public String getLogin() {
         return login;
     }

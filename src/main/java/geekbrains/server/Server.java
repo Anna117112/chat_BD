@@ -26,7 +26,6 @@ public class Server {
     private List<ClientHandler> connectedUsers;
 
     public Server() {
-
         // создаем пул потоков (столько потоков сколько ядер)
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.connectedUsers = new ArrayList<>();

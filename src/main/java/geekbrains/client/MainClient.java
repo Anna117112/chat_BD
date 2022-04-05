@@ -8,25 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-//public class MainClient extends Application {
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
-//        Parent root = loader.load();
-//        stage.setTitle("Чат");
-//        stage.setScene(new Scene(root, 400, 400));
-//        stage.show();
-//        ChatController chatController = loader.getController();
-//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            @Override
-//            public void handle(WindowEvent windowEvent) {
-//                chatController.close();
-//                Platform.exit();
-//                System.exit(0);
-//            }
-//        });
-//    }
-//}
+
 public class MainClient extends Application {
     @Override
     public void start(Stage ptimaryStage) throws IOException {

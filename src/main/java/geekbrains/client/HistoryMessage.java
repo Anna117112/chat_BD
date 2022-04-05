@@ -54,7 +54,6 @@ public class HistoryMessage {
 
         for (int i = 0; i<msg.size(); i++){
 
-
         }
         // возвращаем лист
         return msg;

@@ -25,7 +25,6 @@ public class ChatController implements Initializable {
     // поля для введения пароля
     private PasswordField passwordField;
 
-
 // список клиентов справа
     @FXML
     private ListView<String> clientList;

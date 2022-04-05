@@ -7,7 +7,6 @@ public class InMemoryAuthServiceImpl implements AuthService {
     private final Map<String, UserData> users;
 
 
-
     public InMemoryAuthServiceImpl() {
         users = new HashMap<>();
         users.put("login1", new UserData("login1", "password1", "first_user"));

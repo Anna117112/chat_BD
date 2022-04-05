@@ -101,7 +101,6 @@ public class Network {
                     controller.displayMessage(historyMessage.read().get(i));
                 }
             }
-
             return authenticated;
         } catch (IOException e) {
             e.printStackTrace();

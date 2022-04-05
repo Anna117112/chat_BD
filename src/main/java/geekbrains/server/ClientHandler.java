@@ -65,7 +65,6 @@ public class ClientHandler {
 
     }
 
-
 /// отправляем true или false  при авторизации
     private void sendAuthenticationMessage(boolean authenticated) throws IOException {
         outputStream.writeBoolean(authenticated);
